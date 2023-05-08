@@ -4,29 +4,61 @@
 <meta charset="utf-8">
 <title>Clothes Grasping and Unfolding Based on RGB-D Semantic Segmentation</title>
 </head>
+<style> 
+a{text-decoration:none} 
+a:hover{text-decoration:none}
+a{color:blueviolet}
+</style>
+<style type="text/css"> 
+.normal_size{
+    width:1090px;
+}
+hr
+{
+	border: 0;
+	height: 1px;
+	background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+}
+</style>
 <body>
     <center><h1>Clothes Grasping and Unfolding Based on RGB-D Semantic Segmentation</h1></center>
     <center>
-        <p>Xingyu Zhu<sup>1,2</sup></p>
-	<p>Xin Wang<sup>1,2</sup></p>
-	<p>Jonathan Freer<sup>3</sup></p>
-	<a href="https://hyungjinchang.wordpress.com/">Hyung Jin Chang<sup>3</sup></a>
-	<a href="https://gaoyixing.wordpress.com/">Yixing Gao<sup>1,2,*</sup></a>
+        <h3>Xingyu Zhu<sup>1,2</sup> &ensp;&ensp;&ensp;&ensp; Xin Wang<sup>1,2</sup> &ensp;&ensp;&ensp;&ensp; Jonathan Freer<sup>3</sup> &ensp;&ensp;&ensp;&ensp; <a href="https://hyungjinchang.wordpress.com/">Hyung Jin Chang<sup>3</sup></a> &ensp;&ensp;&ensp;&ensp; <a href="https://gaoyixing.wordpress.com/">Yixing Gao<sup>1,2,*</sup></a></h3>
     </center>
     <center>
-        <p>1 School of Artificial Intelligence, Jilin University, China.<br>
-           2 Engineering Research Center of Knowledge-Driven Human-Machine Intelligence, Ministry of Education, China.<br>
-           3 School of Computer Science, University of Birmingham, UK.<br>
-           *Corresponding author. Email: gaoyixing@jlu.edu.cn</p>
+        <p><b>1</b> School of Artificial Intelligence, Jilin University, China.<br>
+           <b>2</b> Engineering Research Center of Knowledge-Driven Human-Machine Intelligence, Ministry of Education, China.<br>
+           <b>3</b> School of Computer Science, University of Birmingham, UK.<br>
+           <b>*</b>Corresponding author. Email: gaoyixing@jlu.edu.cn</p>
+        <h3>ICRA 2023 &ensp;&ensp; <a href="https://arxiv.org/abs/2305.03259">[Paper]</a></h3>
+    </center>
+    <center>
+        <video src="./v1.mp4" height="144" width="256" controls></video>
+        <video src="./v2.mp4" height="144" width="256" controls></video>
+        <video src="./v3.mp4" height="144" width="256" controls></video>
+        <video src="./v4.mp4" height="144" width="256" controls></video>
     </center>
     <center><h3>Abstract</h3></center>
-    <p>Clothes grasping and unfolding is a core step in robotic-assisted dressing. Most existing works leverage depth images of clothes to train a deep learning-based model to recognize suitable grasping points. These methods often utilize physics engines to synthesize depth images to reduce the cost of real labeled data collection. However, the natural domain gap between synthetic and real images often leads to poor performance of these methods on real data. Furthermore, these approaches often struggle in scenarios where grasping points are occluded by the clothing item itself. To address the above challenges, we propose a novel Bi-directional Fractal Cross Fusion Network (BiFCNet) for semantic segmentation, enabling recognition of graspable regions in order to provide more possibilities for grasping. Instead of using depth images only, we also utilize RGB images with rich color features as input to our network in which the Fractal Cross Fusion (FCF) module fuses RGB and depth data by considering global complex features based on fractal geometry. To reduce the cost of real data collection, we further propose a data augmentation method based on an adversarial strategy, in which the color and geometric transformations simultaneously process RGB and depth data while maintaining the label correspondence. Finally, we present a pipeline for clothes grasping and unfolding from the perspective of semantic segmentation, through the addition of a strategy for grasp point selection from segmentation regions based on clothing flatness measures, while taking into account the grasping direction. We evaluate our BiFCNet on the public dataset NYUDv2 and obtained comparable performance to current state-of-the-art models. We also deploy our model on a Baxter robot, running extensive grasping and unfolding experiments as part of our ablation studies, achieving an 84% success rate.</p>
+    <center>
+        <p align="left" class="normal_size"> &ensp;&ensp;&ensp;&ensp; Clothes grasping and unfolding is a core step in robotic-assisted dressing. Most existing works leverage depth images of clothes to train a deep learning-based model to recognize suitable grasping points. These methods often utilize physics engines to synthesize depth images to reduce the cost of real labeled data collection. However, the natural domain gap between synthetic and real images often leads to poor performance of these methods on real data. Furthermore, these approaches often struggle in scenarios where grasping points are occluded by the clothing item itself. To address the above challenges, we propose a novel Bi-directional Fractal Cross Fusion Network (BiFCNet) for semantic segmentation, enabling recognition of graspable regions in order to provide more possibilities for grasping. Instead of using depth images only, we also utilize RGB images with rich color features as input to our network in which the Fractal Cross Fusion (FCF) module fuses RGB and depth data by considering global complex features based on fractal geometry. To reduce the cost of real data collection, we further propose a data augmentation method based on an adversarial strategy, in which the color and geometric transformations simultaneously process RGB and depth data while maintaining the label correspondence. Finally, we present a pipeline for clothes grasping and unfolding from the perspective of semantic segmentation, through the addition of a strategy for grasp point selection from segmentation regions based on clothing flatness measures, while taking into account the grasping direction. We evaluate our BiFCNet on the public dataset NYUDv2 and obtained comparable performance to current state-of-the-art models. We also deploy our model on a Baxter robot, running extensive grasping and unfolding experiments as part of our ablation studies, achieving an 84% success rate.</p>
+    </center>
+    <hr>
+    <center><img src="./Pipeline.png" height="305" width="1015"></center>
     <center><h3>Overview of the RGB-D semantic segmentation pipeline for clothes grasping and unfolding.</h3></center>
-    <p>The overview of BiFCNet. We use a stage-by-stage Bi-directional propagation structure in the encoder. Two parallel ResNet-101 are used as the backbone and DeepLab V3+ is used as the decoder. The input of the network is a pair of RGB and depth images. Feature pairs output by each layer of ResNet-101 are fused by a FCF module and propagated to the next layer. Fusion results of the first and the last FCF modules are propagated to the DeepLab V3+.</p>
-    <p>The process of training BiFCNet using an adversarial strategy-based data augmentation method. We build color transformation and geometric transformation based on MLP networks. The data augmentation network (color transformation and geometric transformation in the figure) and BiFCNet are alternately trained in turns to update the parameters.</p>
-    <p>Strategy for selecting graspable points and grasp directions. We get the result of the segmentation. Then, a vector set is established for each point in the outer edge and the nearest point of the inner edge, and the surrounding 24 points are sampled to select the most suitable graspable point. We also set an angle of 45 degrees to the x-axis as the grabbing direction.</p>
-    </center><h3>Acknowledgment</h3></center>
-    <p>This work is supported in part by the National Natural Science Foundation of China under grant No. 62203184 and the International Cooperation Project under grant No. 20220402009GH. This work is also supported in part by the MSIT, Korea, under the ITRC program (IITP-2022-2020-0-01789) and the High-Potential Individuals Global Training Program (RS-2022-00155054) supervised by the IITP.</p>
-    <center><h3>This paper has been accepted by the ICRA 2023 conference.</h3></center>
+    <hr>
+    <center>
+        <img src="./BiFCNet.jpg" height="510" width="981">
+        <p align="left" class="normal_size"> &ensp;&ensp;&ensp;&ensp; The overview of BiFCNet. We use a stage-by-stage Bi-directional propagation structure in the encoder. Two parallel ResNet-101 are used as the backbone and DeepLab V3+ is used as the decoder. The input of the network is a pair of RGB and depth images. Feature pairs output by each layer of ResNet-101 are fused by a FCF module and propagated to the next layer. Fusion results of the first and the last FCF modules are propagated to the DeepLab V3+.</p>
+        <img src="./Data_Augmentation.jpg" height="142" width="1034">
+        <p align="left" class="normal_size"> &ensp;&ensp;&ensp;&ensp; The process of training BiFCNet using an adversarial strategy-based data augmentation method. We build color transformation and geometric transformation based on MLP networks. The data augmentation network (color transformation and geometric transformation in the figure) and BiFCNet are alternately trained in turns to update the parameters.</p>
+        <img src="./Selection.png" height="247" width="884">
+        <p align="left" class="normal_size"> &ensp;&ensp;&ensp;&ensp; Strategy for selecting graspable points and grasp directions. We get the result of the segmentation. Then, a vector set is established for each point in the outer edge and the nearest point of the inner edge, and the surrounding 24 points are sampled to select the most suitable graspable point. We also set an angle of 45 degrees to the x-axis as the grabbing direction.</p>
+    </center>
+    <hr>
+    <center><h3>Acknowledgment</h3></center>
+    <center>
+        <p align="left" class="normal_size"> &ensp;&ensp;&ensp;&ensp; This work is supported in part by the National Natural Science Foundation of China under grant No. 62203184 and the International Cooperation Project under grant No. 20220402009GH. This work is also supported in part by the MSIT, Korea, under the ITRC program (IITP-2022-2020-0-01789) and the High-Potential Individuals Global Training Program (RS-2022-00155054) supervised by the IITP.</p>
+    </center>
+    <center><h3>This paper has been accepted by the ICRA 2023 conference. &ensp; <a href="https://arxiv.org/pdf/2305.03259.pdf">[PDF]</a></h3></center>
     </body>
 </html>
